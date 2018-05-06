@@ -29,3 +29,6 @@ render() {
  ```
  
  - string을 컴포넌트 리턴타입으로 사용할 수 있음
+ 
+ ### Portal
+  - react의 root 밖에있는 element를 컨트롤 할 수 있게 해줌.
