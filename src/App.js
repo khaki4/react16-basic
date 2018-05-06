@@ -1,85 +1,45 @@
-import React, { Component, Fragment } from 'react';
-import { createPortal } from 'react-dom';
+import React, { Component } from 'react';
 
-const ErrorFallback = () => ' Sorry something went wrong';
-const BoundaryHOC = ProtectedComponent => class Boundary extends Component {
-  state = {
-    hasError: false,
-  }
+const MAX_PIZZAS = 10;
 
-  componentDidCatch() {
-    this.setState({
-      hasError: true
-    });
-  }
-
-  render() {
-    const { hasError } = this.state;
-
-    if (hasError) {
-      return <ErrorFallback />;
-    } else {
-      return <ProtectedComponent />;
+const eatPizza = (state, props) => {
+  const { pizzas } = state;
+  if (pizzas < MAX_PIZZAS) {
+    return {
+      pizzas: pizzas + 1,
     }
+  } else {
+    return null;
   }
-}
+};
 
-class ErrorMaker extends Component {
+class Controlled extends Component {
   state = {
-    friends: ['jisu', 'flynn','daal', 'jiwon']
-  }
+    pizzas: 0,
+  };
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        friends: undefined,
-      });
-    }, 2000);
+  handleClick = () => {
+    this.setState(eatPizza)
   }
 
   render() {
-    const { friends } = this.state;
-    return friends.map(friend => ` ${friend} `);
-  }
-}
-const PErrorMaker = BoundaryHOC(ErrorMaker);
-
-class Portals extends Component {
-  render() {
-    return createPortal(
-      <Message />,
-      document.getElementById('touchme')
-    )
-  }
-}
-const PPortals = BoundaryHOC(Portals);
-
-const Message = () => 'Just touched it!';
-
-class ReturnTypes extends Component {
-  render() {
-    return 'hello';
-  }
-}
-
-class App extends Component {
-  state = {
-    hasError: false,
-  }
-  componentDidCatch = (error, info) => {
-    this.setState({
-      hasError: true,
-    })
-  }
-  render() {
+    const { pizzas } = this.state;
     return (
-      <Fragment>
-        <ReturnTypes />
-        <PErrorMaker />
-        <PPortals />
-      </Fragment>
+
+      <button onClick={this.handleClick}>
+        {`
+          I have eaten ${pizzas}
+            ${pizzas === 1 ? "pizza" : "pizzas"}
+        `}
+      </button>
     );
   }
 }
 
-export default BoundaryHOC(App);
+class App extends Component {
+  render() {
+    return <Controlled />;
+  }
+}
+
+export default App;

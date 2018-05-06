@@ -3,7 +3,6 @@
 ### Return Types
 
 ```javascript
-
 // Before
 render() {
   return (
@@ -35,6 +34,10 @@ render() {
   
  ### componentDidCatch
   - Error 관리 method
-  
+ 
+ ### setState
+ ```javascript
+ setState(() => null)
+ ```
   
   
