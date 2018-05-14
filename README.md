@@ -44,8 +44,7 @@ render() {
     render() {
       return (
         <Fragment>
-          <ReturnTypes />
-          <Portals />
+          <Message />
         </Fragment>
       );
     }
