@@ -14,7 +14,7 @@ render() {
   );
 }
 
-// Before
+// After
 render() {
   return (
     <Fragment>
